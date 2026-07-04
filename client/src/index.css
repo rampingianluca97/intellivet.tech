@@ -1,0 +1,444 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   IntelliVet v3 — BRUTAL MINIMAL
+   Rule: Every element must be readable at arm's length on mobile.
+   Font: Bebas Neue (display) + Inter (body, but large)
+   Colors: Pure white, pure black, WhatsApp green, red
+   Spacing: Generous. Sections breathe. Nothing crammed.
+   ============================================================ */
+
+@theme inline {
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 3px;
+  --iv-white: #FFFFFF;
+  --iv-black: #0A0A0A;
+  --iv-gray: #F2F2F2;
+  --iv-gray-mid: #888888;
+  --iv-green: #1B5E3B;
+  --iv-wa: #25D366;
+  --iv-wa-dark: #128C7E;
+  --iv-red: #CC0000;
+  --iv-amber: #F5A623;
+  --iv-border: #E5E5E5;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.07 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.07 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.07 0 0);
+  --primary: oklch(0.34 0.09 155);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0.3 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.95 0 0);
+  --accent-foreground: oklch(0.07 0 0);
+  --destructive: oklch(0.5 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.9 0 0);
+  --input: oklch(0.9 0 0);
+  --ring: oklch(0.34 0.09 155);
+}
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--iv-white);
+  color: var(--iv-black);
+  font-family: Georgia, 'Times New Roman', serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1;
+}
+
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
+
+@layer base {
+  * { @apply border-border; }
+  .flex { min-height: 0; min-width: 0; }
+}
+
+/* ── CONTAINER ── */
+.iv-wrap {
+  width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .iv-wrap { padding-left: 2.5rem; padding-right: 2.5rem; max-width: 900px; }
+}
+
+/* ── SECTION SPACING ── */
+.iv-sec {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 768px) {
+  .iv-sec { padding-top: 7rem; padding-bottom: 7rem; }
+}
+
+/* ── TYPOGRAPHY ── */
+
+/* Display: fills the screen */
+.iv-display {
+  font-family: 'Bebas Neue', 'Arial Black', 'Impact', sans-serif;
+  font-weight: 400; /* Bebas Neue is already heavy */
+  font-size: clamp(3.5rem, 18vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  color: var(--iv-black);
+}
+
+/* Section headline */
+.iv-title {
+  font-family: 'Bebas Neue', 'Arial Black', 'Impact', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 12vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  color: var(--iv-black);
+}
+
+/* Sub-title */
+.iv-subtitle {
+  font-family: 'Bebas Neue', 'Arial Black', 'Impact', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.8rem, 8vw, 3.5rem);
+  line-height: 1.0;
+  letter-spacing: 0.01em;
+  color: var(--iv-black);
+}
+
+/* Body: large Georgia serif, centered, matches reference */
+.iv-body {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  line-height: 1.65;
+  color: #222;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* Body bold */
+.iv-body-b {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.2rem, 5vw, 1.5rem);
+  line-height: 1.55;
+  color: var(--iv-black);
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Label */
+.iv-label {
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--iv-green);
+}
+
+/* Price large */
+.iv-price {
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-size: clamp(3rem, 14vw, 7rem);
+  line-height: 1;
+  color: var(--iv-green);
+  letter-spacing: 0.01em;
+}
+
+/* Price strike */
+.iv-strike {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  color: #aaa;
+  text-decoration: line-through;
+  text-decoration-color: var(--iv-red);
+  text-decoration-thickness: 2px;
+  font-weight: 500;
+}
+
+/* ── SCROLLING TICKER BANNER ── */
+.iv-ticker-wrap {
+  background: var(--iv-red);
+  overflow: hidden;
+  padding: 0.9rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+.iv-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: iv-ticker 18s linear infinite;
+  will-change: transform;
+}
+.iv-ticker-item {
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-size: clamp(1.5rem, 6.5vw, 2.2rem);
+  letter-spacing: 0.08em;
+  color: #fff;
+  white-space: nowrap;
+  padding: 0 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.iv-ticker-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  flex-shrink: 0;
+}
+@keyframes iv-ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── BUTTONS ── */
+.iv-btn-wa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: var(--iv-wa);
+  color: #fff;
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-size: clamp(1.3rem, 6vw, 1.8rem);
+  letter-spacing: 0.06em;
+  padding: 1.1rem 2rem;
+  border-radius: 3px;
+  border: none;
+  width: 100%;
+  transition: background 150ms, transform 150ms;
+  line-height: 1;
+}
+.iv-btn-wa:hover { background: var(--iv-wa-dark); }
+.iv-btn-wa:active { transform: scale(0.97); }
+
+.iv-btn-call {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: transparent;
+  color: var(--iv-black);
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-size: clamp(1.1rem, 5vw, 1.5rem);
+  letter-spacing: 0.06em;
+  padding: 1rem 2rem;
+  border-radius: 3px;
+  border: 2.5px solid var(--iv-black);
+  width: 100%;
+  transition: all 150ms;
+  line-height: 1;
+}
+.iv-btn-call:hover { background: var(--iv-black); color: #fff; }
+.iv-btn-call:active { transform: scale(0.97); }
+
+.iv-btn-buy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: var(--iv-black);
+  color: #fff;
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-size: clamp(1.1rem, 5vw, 1.5rem);
+  letter-spacing: 0.06em;
+  padding: 1rem 2rem;
+  border-radius: 3px;
+  border: none;
+  width: 100%;
+  transition: all 150ms;
+  line-height: 1;
+}
+.iv-btn-buy:hover { background: #333; }
+.iv-btn-buy:active { transform: scale(0.97); }
+
+/* ── DIVIDER ── */
+.iv-divider {
+  border: none;
+  border-top: 1.5px solid var(--iv-border);
+  margin: 0;
+}
+
+/* ── REVIEW CAROUSEL ── */
+.iv-carousel-wrap {
+  overflow: hidden;
+  position: relative;
+  /* fade edges */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.iv-carousel-track {
+  display: flex;
+  gap: 1.25rem;
+  animation: iv-carousel 40s linear infinite;
+  will-change: transform;
+  width: max-content;
+}
+/* carousel never pauses */
+@keyframes iv-carousel {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.iv-review-card {
+  background: #fff;
+  border: 1.5px solid var(--iv-border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  width: 300px;
+  flex-shrink: 0;
+}
+@media (min-width: 768px) {
+  .iv-review-card { width: 340px; }
+}
+
+/* ── UNIFIED CTA BLOCK ── */
+.iv-cta-block {
+  background: #0A0A0A;
+  border: 3px dashed rgba(255,255,255,0.45);
+  border-radius: 6px;
+  padding: 2rem 1.75rem;
+  width: 100%;
+}
+
+/* ── SCARCITY ── */
+.iv-scarcity {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #FFF8E1;
+  border: 1.5px solid var(--iv-amber);
+  color: #7A4F00;
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  letter-spacing: 0.06em;
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+}
+
+/* ── GUARANTEE ── */
+.iv-guarantee {
+  background: #F0FFF4;
+  border: 2px solid #4CAF78;
+  border-radius: 4px;
+  padding: 2rem;
+}
+
+/* ── BEFORE/AFTER ── */
+.iv-ba-before {
+  background: #FFF5F5;
+  border-left: 4px solid var(--iv-red);
+  padding: 1.1rem 1.25rem;
+  border-radius: 2px;
+}
+.iv-ba-after {
+  background: #F0FFF4;
+  border-left: 4px solid var(--iv-green);
+  padding: 1.1rem 1.25rem;
+  border-radius: 2px;
+}
+
+/* ── ANIMATIONS ── */
+.iv-fade {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 240ms cubic-bezier(0.23,1,0.32,1), transform 240ms cubic-bezier(0.23,1,0.32,1);
+}
+.iv-fade.visible { opacity: 1; transform: translateY(0); }
+
+/* WhatsApp pulse */
+@keyframes iv-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.45); }
+  50%       { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+}
+.iv-wa-pulse { animation: iv-pulse 2.5s ease-in-out infinite; }
+
+/* Stars */
+.iv-stars { color: var(--iv-amber); font-size: 1.1rem; letter-spacing: 0.04em; }
+
+/* ROI number */
+.iv-roi-num {
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-size: clamp(4rem, 18vw, 9rem);
+  color: var(--iv-red);
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+/* ── FIXED BOTTOM BAR ── */
+.iv-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 950;
+  background: var(--iv-red);
+}
+.iv-bottom-bar a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  font-family: 'Bebas Neue', 'Arial Black', sans-serif;
+  font-size: clamp(1.3rem, 6vw, 1.8rem);
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-decoration: none;
+  width: 100%;
+  transition: background 150ms;
+}
+.iv-bottom-bar a:hover { background: #AA0000; }
+.iv-bottom-bar a:active { background: #880000; }
+.iv-bottom-spacer { height: 4.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .iv-ticker-track, .iv-carousel-track { animation: none; }
+  .iv-fade { opacity: 1; transform: none; transition: none; }
+}
