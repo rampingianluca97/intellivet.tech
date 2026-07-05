@@ -7,6 +7,13 @@
       "runtimeArgs": ["run", "dev"],
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "name": "old-dev",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--dir", "old-intellivet-landing", "run", "dev"],
+      "port": 3000,
+      "autoPort": false
     }
   ]
 }

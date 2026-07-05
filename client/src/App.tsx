@@ -6,12 +6,18 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Home from "./pages/Home";
+import LegalPage from "./pages/LegalPage";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/pricing"} component={() => <LegalPage pageKey="pricing" />} />
+      <Route path={"/terms"} component={() => <LegalPage pageKey="terms" />} />
+      <Route path={"/privacy"} component={() => <LegalPage pageKey="privacy" />} />
+      <Route path={"/refunds"} component={() => <LegalPage pageKey="refunds" />} />
       <Route path={"/404"} component={NotFound} />
+      {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
   );

@@ -5,6 +5,7 @@ interface LanguageContextType {
   lang: Lang;
   t: typeof content["es"];
   toggleLang: () => void;
+  // lang is already exposed above
 }
 
 const LanguageContext = createContext<LanguageContextType>({

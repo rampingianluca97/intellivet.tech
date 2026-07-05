@@ -105,7 +105,9 @@ temp/
 *.sqlite
 *.sqlite3
 
-intellivet-landing.zip
+*.zip
 
 # Claude Code local settings (personal, not shared)
 .claude/settings.local.json
+
+.vercel
