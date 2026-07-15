@@ -270,6 +270,7 @@ function LeadPopup() {
 const WA = "50253638941"; // +502 5363 8941
 const WA_LINK = `https://wa.me/${WA}?text=Hola%2C%20quiero%20una%20demo%20de%20IntelliVet`;
 const CALL_LINK = "tel:+50253638941"; // +502 5363 8941
+const SHOW_VSL = false; // Video de presentación oculto hasta tener el video real
 
 /* ── COUNTDOWN ── */
 function useCountdown() {
@@ -511,37 +512,26 @@ function CTACard({ showBuy = false, showScarcity = false }: { showBuy?: boolean;
   );
 }
 
-/* ── TICKER ── */
+/* ── TICKER (static, fixed — no scrolling) ── */
 function Ticker() {
   const { t } = useLang();
   const countdown = useCountdown();
-  const regularItems = [
-    "OFERTA ESPECIAL",
-    "60% DESCUENTO",
-    "SOLO 3 LUGARES ESTE MES",
-    "INTELLIVET",
-  ];
-  // Build the track: regular items interspersed with the highlighted timer (with label)
-  const buildTrack = () => {
-    const track: { text: string; highlight: boolean }[] = [];
-    regularItems.forEach(item => {
-      track.push({ text: item, highlight: false });
-      track.push({ text: `TERMINA EN: ${countdown}`, highlight: true });
-    });
-    return track;
-  };
-  const single = buildTrack();
-  const all = [...single, ...single]; // duplicate for seamless loop
+  const isEs = t.lang === "es";
+  const label: React.CSSProperties = { ...BB, fontSize: "clamp(0.85rem, 3vw, 1.1rem)", color: "#fff", whiteSpace: "nowrap", lineHeight: 1 };
+  const dotStyle: React.CSSProperties = { width: 6, height: 6, borderRadius: "50%", background: "rgba(255,255,255,0.55)", flexShrink: 0 };
 
   return (
-    <div style={{ background: "#CC0000", overflow: "hidden", padding: "0.85rem 0", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, pointerEvents: "none" }}>
-      <div style={{ display: "flex", width: "max-content", animation: "iv-ticker 18s linear infinite", willChange: "transform" }}>
-        {all.map((item, i) => (
-          <span key={i} style={{ ...BB, fontSize: "clamp(1.4rem, 6vw, 2rem)", color: item.highlight ? "#000" : "#fff", background: item.highlight ? "#FFE600" : "transparent", whiteSpace: "nowrap", padding: item.highlight ? "0.1em 0.6em" : "0 3rem", margin: item.highlight ? "0 1.5rem" : "0", borderRadius: item.highlight ? "2px" : "0", display: "flex", alignItems: "center", gap: "2rem", lineHeight: 1 }}>
-            {item.text}
-            {!item.highlight && <span style={{ width: 10, height: 10, borderRadius: "50%", background: "rgba(255,255,255,0.5)", display: "inline-block", flexShrink: 0 }} />}
-          </span>
-        ))}
+    <div style={{ background: "#CC0000", height: "3rem", overflow: "hidden", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "0 0.75rem" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", flexWrap: "nowrap", whiteSpace: "nowrap" }}>
+        <span className="iv-ticker-side" style={label}>{isEs ? "OFERTA ESPECIAL" : "SPECIAL OFFER"}</span>
+        <span className="iv-ticker-side" style={dotStyle} />
+        <span style={label}>60% DESCUENTO</span>
+        <span style={dotStyle} />
+        <span style={{ ...BB, fontSize: "clamp(0.85rem, 3vw, 1.1rem)", color: "#000", background: "#FFE600", padding: "0.18em 0.55em", borderRadius: "2px", whiteSpace: "nowrap", lineHeight: 1 }}>
+          {isEs ? "TERMINA EN:" : "ENDS IN:"} {countdown}
+        </span>
+        <span className="iv-ticker-side" style={dotStyle} />
+        <span className="iv-ticker-side" style={label}>{isEs ? "SOLO 3 LUGARES" : "ONLY 3 SPOTS"}</span>
       </div>
     </div>
   );
@@ -552,8 +542,8 @@ function ReviewCarousel() {
   const { t } = useLang();
   const doubled = [...t.socialProof.reviews, ...t.socialProof.reviews];
   return (
-    <div style={{ overflow: "hidden", WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)", maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)", pointerEvents: "none" }}>
-      <div style={{ display: "flex", gap: "1.25rem", animation: "iv-carousel 40s linear infinite", willChange: "transform", width: "max-content" }}>
+    <div className="iv-review-carousel" style={{ overflow: "hidden", WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)", maskImage: "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)" }}>
+      <div className="iv-review-track" style={{ display: "flex", gap: "1.25rem", width: "max-content" }}>
         {doubled.map((r, i) => (
           <div key={i} style={{ background: "#fff", border: "1.5px solid var(--iv-border)", borderTop: `5px solid ${r.color}`, borderRadius: "4px", padding: "1.5rem", width: 320, flexShrink: 0 }}>
             {/* Stars */}
@@ -605,10 +595,10 @@ export default function Home() {
       <Ticker />
 
       {/* Spacer for ticker only */}
-      <div style={{ height: "3.5rem" }} aria-hidden="true" />
+      <div style={{ height: "3rem" }} aria-hidden="true" />
 
       {/* ── NAVBAR ── */}
-      <nav style={{ background: "#fff", borderBottom: "1.5px solid var(--iv-border)", padding: "1rem 0", position: "sticky", top: "3.5rem", zIndex: 100 }}>
+      <nav style={{ background: "#fff", borderBottom: "1.5px solid var(--iv-border)", padding: "1rem 0", position: "sticky", top: "3rem", zIndex: 100 }}>
         <div className="iv-wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <img src="/logo.png" alt="IntelliVet logo" style={{ height: 36, width: "auto", objectFit: "contain" }} />
@@ -647,17 +637,17 @@ export default function Home() {
           {/* MASSIVE headline */}
           <h1 className="iv-display iv-fade iv-hero-headline" style={{ marginBottom: "1.5rem" }}>
             {t.lang === "es" ? (
-              <>AHORA MISMO,<br />ALGUIEN NO<br /><span className="iv-recibe" style={{ background: "#003CBD", color: "#fff", padding: "0 0.1em", display: "inline" }}>RECIBE RESPUESTA.</span></>
+              <>AHORA MISMO,<br />ALGUIEN NO<br /><span className="iv-recibe" style={{ background: "#3E6DA3", color: "#fff", padding: "0 0.1em", display: "inline" }}>RECIBE RESPUESTA.</span></>
             ) : (
-              <>RIGHT NOW,<br />SOMEONE ISN'T<br /><span className="iv-recibe" style={{ background: "#003CBD", color: "#fff", padding: "0 0.1em", display: "inline" }}>GETTING A REPLY.</span></>
+              <>RIGHT NOW,<br />SOMEONE ISN'T<br /><span className="iv-recibe" style={{ background: "#3E6DA3", color: "#fff", padding: "0 0.1em", display: "inline" }}>GETTING A REPLY.</span></>
             )}
           </h1>
 
           {/* Subheadline — Bebas Neue uppercase, large, like banner */}
           <p className="iv-fade iv-hero-sub" style={{ ...BB, fontSize: "clamp(1.5rem, 6.5vw, 2.5rem)", color: "#333", lineHeight: 1.2, marginBottom: "3rem", maxWidth: "560px" }}>
             {t.lang === "es"
-              ? <>CUANDO TU CLÍNICA NO CONTESTA WHATSAPP, INSTAGRAM O LLAMADAS, ESE CLIENTE BUSCA OTRA VETERINARIA. INTELLIVET RESPONDE POR TI <span style={{ textDecoration: "underline", textDecorationColor: "#003CBD", textDecorationThickness: "3px" }}>24 HORAS AL DÍA</span> — <span style={{ textDecoration: "underline", textDecorationColor: "#003CBD", textDecorationThickness: "3px" }}>INCLUSO DE NOCHE.</span></>
-              : <>WHEN YOUR CLINIC DOESN'T ANSWER WHATSAPP, INSTAGRAM OR CALLS, THAT CLIENT FINDS ANOTHER VET. INTELLIVET RESPONDS FOR YOU <span style={{ textDecoration: "underline", textDecorationColor: "#003CBD", textDecorationThickness: "3px" }}>24 HOURS A DAY</span> — <span style={{ textDecoration: "underline", textDecorationColor: "#003CBD", textDecorationThickness: "3px" }}>EVEN AT NIGHT.</span></>}
+              ? <>CUANDO TU CLÍNICA NO CONTESTA WHATSAPP, INSTAGRAM O LLAMADAS, ESE CLIENTE BUSCA OTRA VETERINARIA. INTELLIVET RESPONDE POR TI <span style={{ textDecoration: "underline", textDecorationColor: "#3E6DA3", textDecorationThickness: "3px" }}>24 HORAS AL DÍA</span> — <span style={{ textDecoration: "underline", textDecorationColor: "#3E6DA3", textDecorationThickness: "3px" }}>INCLUSO DE NOCHE.</span></>
+              : <>WHEN YOUR CLINIC DOESN'T ANSWER WHATSAPP, INSTAGRAM OR CALLS, THAT CLIENT FINDS ANOTHER VET. INTELLIVET RESPONDS FOR YOU <span style={{ textDecoration: "underline", textDecorationColor: "#3E6DA3", textDecorationThickness: "3px" }}>24 HOURS A DAY</span> — <span style={{ textDecoration: "underline", textDecorationColor: "#3E6DA3", textDecorationThickness: "3px" }}>EVEN AT NIGHT.</span></>}
           </p>
         </div>
 
@@ -673,7 +663,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ VSL ══ */}
+      {/* ══ VSL (oculto — sin video aún; cambiar SHOW_VSL a true para reactivar) ══ */}
+      {SHOW_VSL && (
       <section id="vsl" className="iv-vsl-desktop" style={{ background: "#fff", padding: "5rem 0" }}>
         <div className="iv-vsl-bg" style={{ backgroundImage: "url(https://d2xsxph8kpxj0f.cloudfront.net/310519663411960285/QQumH4UaJLUGXTrd4Ai5Bj/hero_vet_clinic-ZmfvHBsf6AAaYvCYs4WTY2.webp)" }} />
         <div className="iv-wrap iv-vsl-content">
@@ -688,12 +679,13 @@ export default function Home() {
           </div>
         </div>
       </section>
+      )}
 
       {/* ══ PAIN ══ */}
       <section id="pain" style={{ background: "#fff", padding: "0" }}>
 
         {/* Intro row — navy-teal veterinary blue */}
-        <div style={{ background: "linear-gradient(135deg, #002A9E 0%, #003CBD 100%)", padding: "3rem 0" }}>
+        <div style={{ background: "linear-gradient(135deg, #34608F 0%, #4B82B8 100%)", padding: "3rem 0" }}>
           <div className="iv-wrap">
             <p className="iv-label iv-fade" style={{ color: "rgba(255,255,255,0.55)", marginBottom: "0.75rem" }}>
               {t.lang === "es" ? "EL PROBLEMA" : "THE PROBLEM"}
@@ -707,7 +699,7 @@ export default function Home() {
         {/* Pain items — alternating white / light gray rows, editorial style */}
         {t.pain.items.map((item, i) => {
           const isEven = i % 2 === 0;
-          const accents = ["#003CBD", "#003CBD", "#003CBD", "#003CBD"];
+          const accents = ["#3E6DA3", "#3E6DA3", "#3E6DA3", "#3E6DA3"];
           return (
             <div
               key={i}
@@ -748,13 +740,13 @@ export default function Home() {
         })}
 
         {/* Closing — navy-teal veterinary blue */}
-        <div style={{ background: "linear-gradient(135deg, #002A9E 0%, #003CBD 100%)", padding: "3rem 0" }}>
+        <div style={{ background: "linear-gradient(135deg, #34608F 0%, #4B82B8 100%)", padding: "3rem 0" }}>
           <div className="iv-wrap">
             <div className="iv-fade">
               <p style={{ ...BB, fontSize: "clamp(1.6rem, 7.5vw, 3rem)", color: "#fff", lineHeight: 1.05, marginBottom: "0.5rem" }}>
                 {t.lang === "es" ? "EL PROBLEMA NO ES QUE FALTEN CLIENTES." : "THE PROBLEM ISN'T A LACK OF CLIENTS."}
               </p>
-              <p style={{ ...BB, fontSize: "clamp(1.6rem, 7.5vw, 3rem)", color: "#FFE600", lineHeight: 1.05 }}>
+              <p style={{ ...BB, fontSize: "clamp(1.6rem, 7.5vw, 3rem)", color: "#FFE9A8", lineHeight: 1.05 }}>
                 {t.lang === "es" ? "EL PROBLEMA ES QUE MUCHOS NO RECIBEN RESPUESTA A TIEMPO." : "THE PROBLEM IS THAT MANY DON'T GET A TIMELY RESPONSE."}
               </p>
             </div>
