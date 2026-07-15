@@ -517,7 +517,7 @@ function Ticker() {
   const { t } = useLang();
   const countdown = useCountdown();
   const isEs = t.lang === "es";
-  const label: React.CSSProperties = { ...BB, fontSize: "clamp(0.85rem, 3vw, 1.1rem)", color: "#fff", whiteSpace: "nowrap", lineHeight: 1 };
+  const label: React.CSSProperties = { ...BB, fontSize: "clamp(1rem, 3.8vw, 1.4rem)", color: "#fff", whiteSpace: "nowrap", lineHeight: 1 };
   const dotStyle: React.CSSProperties = { width: 6, height: 6, borderRadius: "50%", background: "rgba(255,255,255,0.55)", flexShrink: 0 };
 
   return (
@@ -527,7 +527,7 @@ function Ticker() {
         <span className="iv-ticker-side" style={dotStyle} />
         <span style={label}>60% DESCUENTO</span>
         <span style={dotStyle} />
-        <span style={{ ...BB, fontSize: "clamp(0.85rem, 3vw, 1.1rem)", color: "#000", background: "#FFE600", padding: "0.18em 0.55em", borderRadius: "2px", whiteSpace: "nowrap", lineHeight: 1 }}>
+        <span style={{ ...BB, fontSize: "clamp(1rem, 3.8vw, 1.4rem)", color: "#000", background: "#FFE600", padding: "0.18em 0.55em", borderRadius: "2px", whiteSpace: "nowrap", lineHeight: 1 }}>
           {isEs ? "TERMINA EN:" : "ENDS IN:"} {countdown}
         </span>
         <span className="iv-ticker-side" style={dotStyle} />
