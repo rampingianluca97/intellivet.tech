@@ -611,7 +611,7 @@ export default function Home() {
       <nav style={{ background: "#fff", borderBottom: "1.5px solid var(--iv-border)", padding: "1rem 0", position: "sticky", top: "3.5rem", zIndex: 100 }}>
         <div className="iv-wrap" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <img src="/manus-storage/logoIntelliVet_4b97bb80.png" alt="IntelliVet logo" style={{ height: 36, width: "auto", objectFit: "contain" }} />
+            <img src="/logo.png" alt="IntelliVet logo" style={{ height: 36, width: "auto", objectFit: "contain" }} />
             <span style={{ ...BB, fontSize: "1.75rem", color: "var(--iv-black)", lineHeight: 1 }}>INTELLIVET</span>
           </div>
           {/* Language switch with flags */}
