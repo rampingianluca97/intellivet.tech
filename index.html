@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IntelliVet | Tu clínica responde aunque tú no puedas</title>
+<meta name="description" content="Sistema de atención con IA para clínicas veterinarias. Responde WhatsApp, Instagram y llamadas 24/7. Lo instalamos y lo mantenemos nosotros.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14161A;
+  --ink-2:#494743;
+  --ink-3:#7A756E;
+  --navy:#0F1D28;
+  --navy-2:#16293A;
+  --teal:#1F8A99;
+  --teal-2:#166874;
+  --teal-glow:#2FB5C7;
+  --tint:#EAF4F5;
+  --amber:#E8924C;
+  --surface:#F5F7F8;
+  --white:#fff;
+  --line:#E2E7EA;
+  --line-d:rgba(255,255,255,.1);
+  --paper:#E9E7E3;
+  --paper-2:#BDB9B2;
+  --paper-3:#918C84;
+  --wrap:1140px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Archivo',system-ui,-apple-system,sans-serif;
+  color:var(--ink);background:var(--white);
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Sora',system-ui,sans-serif;letter-spacing:-.035em;line-height:1.02}
+img,iframe{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+.sec{padding:72px 0}
+.sec--tint{background:var(--surface)}
+.sec--navy{background:var(--navy);color:var(--paper)}
+
+/* ============ TYPE SCALE — mobile first, big ============ */
+.eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:16px;display:flex;align-items:center;gap:11px;
+}
+.eyebrow::before{
+  content:'';width:9px;height:9px;flex:none;background:var(--teal);
+  box-shadow:0 0 0 3px rgba(31,138,153,.16);
+}
+.sec--navy .eyebrow{color:var(--teal-glow)}
+.sec--navy .eyebrow::before{background:var(--teal-glow);box-shadow:0 0 0 3px rgba(47,181,199,.18)}
+
+.h2{font-size:clamp(34px,8.5vw,60px);font-weight:700;margin-bottom:18px}
+.h2 em{font-style:normal;color:var(--teal)}
+.sec--navy .h2 em{color:var(--teal-glow)}
+.lead{font-size:clamp(17px,4.2vw,20px);color:var(--ink-2);max-width:56ch;margin-bottom:44px;line-height:1.55}
+.sec--navy .lead{color:var(--paper-2)}
+
+/* ============ NAV ============ */
+.nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav__in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:32px;height:32px}
+.brand span{font-family:'Sora';font-weight:700;font-size:18px;letter-spacing:-.02em}
+.brand i{font-style:normal;color:var(--teal)}
+.nav__cta{background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;font-size:14px;font-weight:600}
+
+/* ============ BUTTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:18px 28px;border-radius:10px;font-size:16px;font-weight:600;
+  border:2px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s;
+  width:100%;
+}
+.btn--wa{background:#25D366;color:#062B14;box-shadow:0 8px 24px -6px rgba(37,211,102,.5)}
+.btn--wa:hover{transform:translateY(-2px);box-shadow:0 14px 32px -6px rgba(37,211,102,.6)}
+.btn--teal{background:var(--teal);color:#fff;box-shadow:0 8px 24px -6px rgba(31,138,153,.5)}
+.btn--teal:hover{transform:translateY(-2px)}
+.btn--ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn--ghost:hover{border-color:var(--ink)}
+.btn--ghost-l{background:transparent;color:#fff;border-color:var(--line-d)}
+.btn--ghost-l:hover{border-color:#fff}
+@media(min-width:600px){.btn{width:auto}}
+
+/* ============ HERO ============ */
+.hero{position:relative;background:var(--navy);color:#fff;padding:72px 0 0;overflow:hidden}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(90% 60% at 50% 0%, rgba(47,181,199,.18), transparent 70%);
+  pointer-events:none;
+}
+.hero__in{position:relative;z-index:1}
+
+.pulse{
+  display:inline-flex;align-items:center;gap:9px;
+  background:rgba(255,255,255,.07);border:1px solid var(--line-d);
+  padding:8px 15px;border-radius:100px;margin-bottom:26px;
+  font-size:12.5px;font-weight:600;letter-spacing:.03em;color:#D3CFC8;
+}
+.pulse i{
+  width:7px;height:7px;border-radius:50%;background:#4ADE80;flex:none;
+  box-shadow:0 0 0 0 rgba(74,222,128,.7);animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(74,222,128,.6)}
+  70%{box-shadow:0 0 0 9px rgba(74,222,128,0)}
+  100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}
+}
+
+.hero h1{
+  font-size:clamp(42px,11.5vw,84px);font-weight:800;
+  margin-bottom:22px;letter-spacing:-.045em;line-height:.96;
+}
+.hero h1 em{font-style:normal;color:var(--teal-glow);display:block}
+.hero__lead{font-size:clamp(17px,4.4vw,21px);color:#C6C2BB;max-width:44ch;margin-bottom:32px;line-height:1.5}
+
+.hero__acts{display:flex;flex-direction:column;gap:11px;margin-bottom:0}
+@media(min-width:600px){.hero__acts{flex-direction:row}}
+
+/* live conversation */
+.conv{
+  background:linear-gradient(180deg,#132433,#0D1A25);
+  border:1px solid var(--line-d);border-radius:18px 18px 0 0;
+  padding:18px 15px 26px;max-width:440px;margin:0 auto;
+  box-shadow:0 -12px 60px -10px rgba(47,181,199,.2);
+}
+.conv__bar{display:flex;align-items:center;gap:9px;padding-bottom:14px;border-bottom:1px solid var(--line-d);margin-bottom:16px}
+.conv__dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;flex:none}
+.conv__t{font-size:12px;color:#A6A199;font-weight:600;letter-spacing:.04em}
+.conv__clock{margin-left:auto;font-size:12px;color:#8A857D;font-variant-numeric:tabular-nums}
+.b{padding:11px 14px;border-radius:13px;font-size:14.5px;line-height:1.45;max-width:86%;margin-bottom:8px;opacity:0;animation:rise .5s ease forwards}
+.b--in{background:#28323B;color:#E4E1DC;border-bottom-left-radius:4px}
+.b--out{background:var(--teal);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.b:nth-child(2){animation-delay:.2s}
+.b:nth-child(3){animation-delay:.9s}
+.b:nth-child(4){animation-delay:1.6s}
+.b:nth-child(5){animation-delay:2.3s}
+.b:nth-child(6){animation-delay:3s}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.conv__done{
+  display:flex;align-items:center;gap:8px;margin-top:16px;padding-top:14px;
+  border-top:1px solid var(--line-d);font-size:11.5px;color:#4ADE80;
+  font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  opacity:0;animation:rise .5s ease 3.6s forwards;
+}
+
+/* ============ COUNTER STRIP ============ */
+.strip{background:var(--ink);color:#fff;padding:34px 0}
+.strip__in{display:grid;gap:26px;text-align:center}
+@media(min-width:700px){.strip__in{grid-template-columns:repeat(3,1fr);text-align:left}}
+.strip__n{font-family:'Sora';font-size:clamp(32px,7vw,42px);font-weight:700;color:var(--teal-glow);line-height:1;letter-spacing:-.03em}
+.strip__l{font-size:14px;color:#ADA8A0;margin-top:7px;line-height:1.4}
+
+/* ============ PROBLEM ============ */
+.probs{display:grid;gap:14px}
+@media(min-width:800px){.probs{grid-template-columns:1fr 1fr}}
+.prob{
+  background:var(--white);border:1px solid var(--line);border-radius:14px;
+  padding:28px 24px;position:relative;overflow:hidden;
+}
+.prob::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber)}
+.prob__w{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:11px;display:block}
+.prob h3{font-family:'Sora';font-size:clamp(19px,4.6vw,23px);font-weight:600;line-height:1.25;margin-bottom:8px;letter-spacing:-.02em}
+.prob p{font-size:15.5px;color:var(--ink-2)}
+.punch{
+  margin-top:36px;padding:36px 28px;background:var(--navy);color:#fff;
+  border-radius:16px;text-align:center;
+}
+.punch p{font-family:'Sora';font-size:clamp(21px,5.4vw,32px);font-weight:600;line-height:1.25;letter-spacing:-.025em}
+.punch em{font-style:normal;color:var(--teal-glow)}
+
+/* ============ VIDEOS ============ */
+.vids{display:grid;gap:34px}
+@media(min-width:860px){.vids{grid-template-columns:1fr 1fr}}
+.vid__f{position:relative;padding-bottom:56.25%;height:0;border-radius:14px;overflow:hidden;background:#0A141C;border:1px solid var(--line-d)}
+.vid__f iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid__c{padding-top:18px}
+.vid__c h3{font-family:'Sora';font-size:20px;font-weight:600;margin-bottom:7px;color:#fff;letter-spacing:-.02em}
+.vid__c p{font-size:15.5px;color:var(--paper-2)}
+
+/* ============ COMPARE ============ */
+.cmp{display:grid;gap:14px}
+@media(min-width:760px){.cmp{grid-template-columns:1fr 1fr;gap:20px}}
+.cmp__col{border-radius:16px;padding:30px 26px}
+.cmp__col--now{background:var(--white);border:1px solid var(--line)}
+.cmp__col--new{background:var(--navy);color:#fff;box-shadow:0 20px 50px -18px rgba(15,29,40,.5)}
+.cmp__h{
+  font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:22px;color:var(--ink-3);
+}
+.cmp__col--new .cmp__h{color:var(--teal-glow)}
+.cmp__l{list-style:none;display:grid;gap:16px}
+.cmp__l li{display:flex;gap:12px;font-size:15.5px;line-height:1.45;color:var(--ink-2)}
+.cmp__col--new .cmp__l li{color:#DAD7D2}
+.cmp__i{flex:none;width:19px;height:19px;margin-top:2px}
+
+/* ============ FIT ============ */
+.fit{display:grid;gap:18px}
+@media(min-width:800px){.fit{grid-template-columns:1fr 1fr}}
+.fit__c{border-radius:16px;padding:32px 26px;border:1px solid var(--line);background:var(--white)}
+.fit__c--y{background:var(--tint);border-color:#BCDCE0}
+.fit__c h3{font-family:'Sora';font-size:20px;font-weight:600;margin-bottom:20px;letter-spacing:-.02em}
+.fit__l{list-style:none;display:grid;gap:14px}
+.fit__l li{display:flex;gap:11px;font-size:15.5px;color:var(--ink-2);line-height:1.45}
+
+/* ============ STEPS ============ */
+.steps{display:grid;gap:0}
+.step{display:flex;gap:20px;padding:26px 0;border-top:1px solid var(--line-d)}
+.step:last-child{border-bottom:1px solid var(--line-d)}
+.step__n{
+  font-family:'Sora';font-size:clamp(30px,7vw,40px);font-weight:700;
+  color:rgba(255,255,255,.16);line-height:.9;flex:none;width:56px;letter-spacing:-.04em;
+}
+.step--1 .step__n{color:var(--teal-glow)}
+.step h3{font-family:'Sora';font-size:clamp(18px,4.4vw,21px);font-weight:600;margin-bottom:6px;letter-spacing:-.02em;color:#fff}
+.step p{font-size:15.5px;color:var(--paper-2)}
+
+/* ============ GUARANTEE ============ */
+.guar{
+  background:linear-gradient(135deg,var(--navy),#1B3648);
+  border-radius:18px;padding:40px 28px;color:#fff;text-align:center;
+  position:relative;overflow:hidden;
+}
+.guar::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(70% 100% at 50% 0%, rgba(47,181,199,.16), transparent);
+}
+.guar__c{position:relative}
+.guar svg{width:44px;height:44px;color:var(--teal-glow);margin:0 auto 18px}
+.guar h3{font-family:'Sora';font-size:clamp(24px,6vw,34px);font-weight:700;margin-bottom:12px;letter-spacing:-.03em}
+.guar p{font-size:17px;color:#CFCBC4;max-width:50ch;margin:0 auto}
+.guar small{display:block;margin-top:16px;font-size:13px;color:#A39E96;max-width:56ch;margin-inline:auto}
+
+/* ============ FAQ ============ */
+.faq{max-width:780px;margin:0 auto}
+.faq__i{border-bottom:1px solid var(--line)}
+.faq__q{
+  width:100%;background:none;border:0;cursor:pointer;text-align:left;
+  padding:22px 44px 22px 0;position:relative;list-style:none;
+  font-family:'Sora';font-size:clamp(16.5px,4.2vw,18px);font-weight:600;letter-spacing:-.015em;
+}
+.faq__q::-webkit-details-marker{display:none}
+.faq__q::after{
+  content:'';position:absolute;right:6px;top:50%;width:9px;height:9px;
+  border-right:2px solid var(--teal);border-bottom:2px solid var(--teal);
+  transform:translateY(-70%) rotate(45deg);transition:transform .22s;
+}
+.faq__i[open] .faq__q::after{transform:translateY(-30%) rotate(-135deg)}
+.faq__a{padding:0 20px 24px 0;font-size:15.5px;color:var(--ink-2);max-width:64ch}
+
+/* ============ FINAL CTA ============ */
+.end{background:var(--navy);color:#fff;padding:80px 0;text-align:center;position:relative;overflow:hidden}
+.end::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(80% 70% at 50% 100%, rgba(47,181,199,.2), transparent 70%);
+}
+.end__c{position:relative;z-index:1}
+.end h2{font-size:clamp(32px,8vw,54px);font-weight:800;margin-bottom:18px;letter-spacing:-.04em;line-height:1}
+.end h2 em{font-style:normal;color:var(--teal-glow)}
+.end p{font-size:17.5px;color:#C6C2BB;max-width:48ch;margin:0 auto 34px}
+.end__a{display:flex;flex-direction:column;gap:11px;max-width:400px;margin:0 auto 34px}
+@media(min-width:600px){.end__a{flex-direction:row;justify-content:center;max-width:none}}
+.end__n{margin:0;font-size:13.5px;color:#8F8A82}
+
+/* ============ FOOT ============ */
+.foot{background:#0A141C;color:#847F77;padding:30px 0;font-size:13px}
+.foot__in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+.foot a{margin-left:20px;color:#847F77}
+.foot a:hover{color:var(--paper)}
+
+/* ============ STICKY MOBILE CTA ============ */
+.sticky{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);padding:11px 16px calc(11px + env(safe-area-inset-bottom));
+  transform:translateY(110%);transition:transform .3s ease;
+}
+.sticky.on{transform:none}
+@media(min-width:860px){.sticky{display:none}}
+
+.wa-f{
+  position:fixed;right:20px;bottom:20px;z-index:60;width:54px;height:54px;
+  border-radius:50%;background:#25D366;display:none;place-items:center;
+  box-shadow:0 8px 26px -4px rgba(37,211,102,.5);transition:transform .15s;
+}
+.wa-f:hover{transform:scale(1.07)}
+.wa-f svg{width:28px;height:28px;fill:#fff}
+@media(min-width:860px){.wa-f{display:grid}}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .b,.conv__done{opacity:1!important}
+}
+
+/* ============ SCROLL REVEAL ============ */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+.rv-d1{transition-delay:.08s}
+.rv-d2{transition-delay:.16s}
+.rv-d3{transition-delay:.24s}
+
+/* hover lift on problem cards (desktop only) */
+@media(hover:hover) and (min-width:800px){
+  .prob{transition:transform .25s cubic-bezier(.2,.7,.3,1),box-shadow .25s,border-color .25s}
+  .prob:hover{transform:translateY(-4px);box-shadow:0 16px 40px -14px rgba(16,24,32,.22);border-color:#CFD8DE}
+  .vid__f{transition:transform .3s cubic-bezier(.2,.7,.3,1)}
+  .vid__f:hover{transform:translateY(-3px)}
+}
+
+/* counting numbers keep width stable */
+.strip__n{font-variant-numeric:tabular-nums}
+
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1!important;transform:none!important}
+}
+
+
+/* ============ LANG TOGGLE ============ */
+.lang{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex:none}
+.lang button{
+  background:none;border:0;cursor:pointer;padding:7px 11px;
+  font-family:'Archivo';font-size:12px;font-weight:700;letter-spacing:.06em;
+  color:var(--ink-3);transition:background .15s,color .15s;
+}
+.lang button.on{background:var(--ink);color:#fff}
+.nav__r{display:flex;align-items:center;gap:10px}
+@media(max-width:520px){.nav__cta{display:none}}
+
+/* ============ SLOTS PILL ============ */
+.slots{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;color:var(--amber);
+  background:rgba(232,146,76,.1);border:1px solid rgba(232,146,76,.3);
+  padding:7px 13px;border-radius:100px;
+}
+.slots i{width:6px;height:6px;border-radius:50%;background:var(--amber);flex:none}
+.slots--l{color:#F0A868;background:rgba(232,146,76,.12);border-color:rgba(232,146,76,.28)}
+.hero__meta{display:flex;flex-direction:column;align-items:flex-start;gap:14px;margin-top:22px;margin-bottom:48px}
+@media(min-width:760px){.hero__meta{flex-direction:row;align-items:center;gap:18px}}
+.hero__note{font-size:13.5px;color:#8F8A82;margin:0;line-height:1.5}
+
+/* ============ STICKY: 2 buttons ============ */
+.sticky__row{display:flex;gap:8px}
+.sticky__row .btn{padding:15px 14px;font-size:15px;flex:1}
+.sticky__slots{
+  display:block;text-align:center;font-size:11.5px;font-weight:600;
+  color:var(--amber);margin-bottom:8px;letter-spacing:.02em;
+}
+
+:focus-visible{outline:2px solid var(--teal-glow);outline-offset:3px;border-radius:5px}
+</style>
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav__in">
+    <a href="#" class="brand"><img src="logo.png" alt=""><span>Intelli<i>Vet</i></span></a>
+    <div class="nav__r">
+      <a href="#" class="nav__cta" data-wa data-i="nav_cta">Hablar ahora</a>
+      <div class="lang">
+        <button type="button" data-lang="es" class="on">ES</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap hero__in">
+    <div class="pulse"><i></i> <span data-i="pulse">RESPONDIENDO AHORA MISMO</span> · <span id="pulseClk">23:14</span></div>
+    <h1><span data-i="h1a">Son las 23:14.</span><em data-i="h1b">Tu clínica acaba de ganar un cliente.</em></h1>
+    <p class="hero__lead" data-i="hero_lead">Tú estás durmiendo. IntelliVet contesta WhatsApp, Instagram y el teléfono. Coordina el turno, detecta la urgencia y te avisa solo si hace falta.</p>
+    <div class="hero__acts">
+      <a href="#" class="btn btn--wa" data-wa>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>
+        <span data-i="cta_wa">Escríbenos por WhatsApp</span>
+      </a>
+      <a href="#" class="btn btn--ghost-l" data-cal>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18" stroke-linecap="round"/></svg>
+        <span data-i="cta_cal">Reservar hora yo mismo</span>
+      </a>
+    </div>
+    <div class="hero__meta">
+      <span class="slots slots--l"><i></i><span data-i="slots">Quedan 3 lugares este mes</span></span>
+      <span class="hero__note" data-i="note">Sin compromiso. Respondemos en menos de 1 hora.</span>
+    </div>
+
+    <!-- the conversation happening while you sleep -->
+    <div class="conv" aria-hidden="true">
+      <div class="conv__bar">
+        <span class="conv__dot"></span>
+        <span class="conv__t" data-i="conv_t">WhatsApp · Clínica</span>
+        <span class="conv__clock" id="clk">23:14</span>
+      </div>
+      <div class="b b--in" data-i="b1">Hola, mi perro lleva vomitando desde la tarde. ¿Están abiertos?</div>
+      <div class="b b--out" data-i="b2">Hola 👋 Ahora la clínica está cerrada, pero puedo ayudarte. ¿Ha vomitado más de tres veces o tiene sangre?</div>
+      <div class="b b--in" data-i="b3">Tres o cuatro veces. Sin sangre.</div>
+      <div class="b b--out" data-i="b4">Entendido. Te reservo turno mañana a las 9:00 y aviso al equipo esta noche. Si empeora o aparece sangre, llama al 900 000 000.</div>
+      <div class="b b--in" data-i="b5">Perfecto, muchas gracias.</div>
+      <div class="conv__done">
+        <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path d="M7.6 14.2 3.4 10l1.4-1.4 2.8 2.8 7.6-7.6L16.6 5z"/></svg>
+        <span data-i="conv_done">Turno agendado. Equipo avisado. Tú no hiciste nada.</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ STRIP ============ -->
+<section class="strip">
+  <div class="wrap strip__in rv">
+    <div>
+      <div class="strip__n" data-count="24" data-suffix="/7">0/7</div>
+      <p class="strip__l" data-i="s1l">Contesta de noche, findes y mientras estás en cirugía.</p>
+    </div>
+    <div>
+      <div class="strip__n" data-count="30" data-prefix="&lt; " data-suffix=" seg">&lt; 0 seg</div>
+      <p class="strip__l" data-i="s2l">Lo que tarda en responder. La clínica de al lado tarda horas.</p>
+    </div>
+    <div>
+      <div class="strip__n" data-count="5" data-suffix="+">0+</div>
+      <p class="strip__l" data-i="s3l">Clínicas que ya lo tienen funcionando hoy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM ============ -->
+<section class="sec sec--tint">
+  <div class="wrap">
+    <p class="eyebrow rv" data-i="eb_problem">El problema</p>
+    <h2 class="h2 rv rv-d1"><span data-i="h2_problem">No te faltan clientes.</span><br><em data-i="h2_problem_em">Te falta contestar.</em></h2>
+    <p class="lead rv rv-d2" data-i="lead_problem">Cuatro momentos que pasan en tu clínica cada semana. Probablemente hoy también.</p>
+
+    <div class="probs rv rv-d3">
+      <div class="prob">
+        <span class="prob__w" data-i="p1w">Durante la consulta</span>
+        <h3 data-i="p1h">Suena el teléfono. Tienes las manos ocupadas.</h3>
+        <p data-i="p1p">Nadie contesta. Ese cliente llama a la clínica de al lado.</p>
+      </div>
+      <div class="prob">
+        <span class="prob__w" data-i="p2w">Después de la cirugía</span>
+        <h3 data-i="p2h">Sales del quirófano. 18 mensajes sin responder.</h3>
+        <p data-i="p2p">Algunos ya no están esperando.</p>
+      </div>
+      <div class="prob">
+        <span class="prob__w" data-i="p3w">Fuera de horario</span>
+        <h3 data-i="p3h">Las urgencias no miran el reloj.</h3>
+        <p data-i="p3p">Pero tu equipo sí se va a casa a las 20:00.</p>
+      </div>
+      <div class="prob">
+        <span class="prob__w" data-i="p4w">En recepción</span>
+        <h3 data-i="p4h">Una persona. Cuatro canales. A la vez.</h3>
+        <p data-i="p4p">Mostrador, teléfono, WhatsApp e Instagram. Es imposible.</p>
+      </div>
+    </div>
+
+    <div class="punch rv">
+      <p><span data-i="punch">Cada llamada perdida es un cliente</span><br><em data-i="punch_em">que ya está llamando a otro.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIDEOS ============ -->
+<section class="sec sec--navy" id="como">
+  <div class="wrap">
+    <p class="eyebrow rv" data-i="eb_how">Cómo funciona</p>
+    <h2 class="h2 rv rv-d1" style="color:#fff"><span data-i="h2_how">No te lo contamos.</span><br><em data-i="h2_how_em">Te lo enseñamos.</em></h2>
+    <p class="lead rv rv-d2" data-i="lead_how">Dos grabaciones del sistema atendiendo de verdad. Sin edición, sin guion.</p>
+
+    <div class="vids rv rv-d3">
+      <div>
+        <div class="vid__f">
+          <iframe src="https://www.youtube.com/embed/1mxJ7UWoy90" title="El agente de voz atiende una llamada" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="vid__c">
+          <h3 data-i="v1h">Contesta el teléfono</h3>
+          <p data-i="v1p">Atiende, entiende el motivo, detecta si es urgente y avisa al equipo cuando hace falta.</p>
+        </div>
+      </div>
+      <div>
+        <div class="vid__f">
+          <iframe src="https://www.youtube.com/embed/TU60b6MDY-E" title="El chat responde y agenda turnos" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="vid__c">
+          <h3 data-i="v2h">Responde y agenda</h3>
+          <p data-i="v2p">WhatsApp, Instagram, Telegram y web. Recoge los datos y propone los horarios que tienes libres.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow rv" data-i="eb_change">El cambio</p>
+    <h2 class="h2 rv rv-d1"><span data-i="h2_change">Mismo equipo.</span><br><em data-i="h2_change_em">Otra clínica.</em></h2>
+    <p class="lead rv rv-d2" data-i="lead_change">No cambia lo que haces. Cambia lo que pasa cuando nadie puede contestar.</p>
+
+    <div class="cmp rv rv-d3">
+      <div class="cmp__col cmp__col--now">
+        <p class="cmp__h" data-i="c_now">Hoy</p>
+        <ul class="cmp__l">
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E2E7EA"/><path d="M7 7l6 6M13 7l-6 6" stroke="#8A959F" stroke-width="1.8" stroke-linecap="round"/></svg><span data-i="n1">Los mensajes se acumulan mientras atiendes.</span></li>
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E2E7EA"/><path d="M7 7l6 6M13 7l-6 6" stroke="#8A959F" stroke-width="1.8" stroke-linecap="round"/></svg><span data-i="n2">De noche el teléfono suena en una sala vacía.</span></li>
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E2E7EA"/><path d="M7 7l6 6M13 7l-6 6" stroke="#8A959F" stroke-width="1.8" stroke-linecap="round"/></svg><span data-i="n3">El cliente que no espera se va a otra clínica.</span></li>
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E2E7EA"/><path d="M7 7l6 6M13 7l-6 6" stroke="#8A959F" stroke-width="1.8" stroke-linecap="round"/></svg><span data-i="n4">El equipo interrumpido cada cinco minutos.</span></li>
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E2E7EA"/><path d="M7 7l6 6M13 7l-6 6" stroke="#8A959F" stroke-width="1.8" stroke-linecap="round"/></svg><span data-i="n5">Nadie sabe cuántos contactos se perdieron.</span></li>
+        </ul>
+      </div>
+
+      <div class="cmp__col cmp__col--new">
+        <p class="cmp__h" data-i="c_new">Con IntelliVet</p>
+        <ul class="cmp__l">
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2FB5C7"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#0F1D28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="w1">Respuesta en menos de 30 segundos, siempre.</span></li>
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2FB5C7"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#0F1D28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="w2">Cobertura 24/7, también de madrugada.</span></li>
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2FB5C7"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#0F1D28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="w3">Atendido antes de que piense en irse.</span></li>
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2FB5C7"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#0F1D28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="w4">El equipo trabaja. El sistema contesta.</span></li>
+          <li><svg class="cmp__i" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2FB5C7"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#0F1D28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="w5">Cada contacto registrado, con reporte mensual.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIT ============ -->
+<section class="sec sec--tint">
+  <div class="wrap">
+    <p class="eyebrow rv" data-i="eb_who">¿Para quién es?</p>
+    <h2 class="h2 rv rv-d1"><span data-i="h2_who">Esto no le sirve</span><br><em data-i="h2_who_em">a todo el mundo.</em></h2>
+    <p class="lead rv rv-d2" data-i="lead_who">Preferimos decírtelo ahora que hacerte perder 15 minutos en una demo.</p>
+
+    <div class="fit rv rv-d3">
+      <div class="fit__c fit__c--y">
+        <h3 data-i="fit_y">Tiene sentido si…</h3>
+        <ul class="fit__l">
+          <li><svg width="19" height="19" viewBox="0 0 20 20" style="flex:none;margin-top:2px"><circle cx="10" cy="10" r="9" fill="#1F8A99"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="y1">Recibes más de 20 mensajes al día y no llegas a todos.</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 20 20" style="flex:none;margin-top:2px"><circle cx="10" cy="10" r="9" fill="#1F8A99"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="y2">Pierdes llamadas cuando estás en consulta o cirugía.</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 20 20" style="flex:none;margin-top:2px"><circle cx="10" cy="10" r="9" fill="#1F8A99"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="y3">Te preocupa perder urgencias fuera de horario.</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 20 20" style="flex:none;margin-top:2px"><circle cx="10" cy="10" r="9" fill="#1F8A99"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="y4">Ya probaste con recepción y sigue sin alcanzar.</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 20 20" style="flex:none;margin-top:2px"><circle cx="10" cy="10" r="9" fill="#1F8A99"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i="y5">Quieres algo montado y mantenido, no otro software que configurar.</span></li>
+        </ul>
+      </div>
+      <div class="fit__c">
+        <h3 data-i="fit_n">No tiene sentido si…</h3>
+        <ul class="fit__l">
+          <li><svg width="19" height="19" viewBox="0 0 20 20" style="flex:none;margin-top:2px"><circle cx="10" cy="10" r="9" fill="#D8DEE3"/><path d="M7 7l6 6M13 7l-6 6" stroke="#6B7780" stroke-width="1.9" stroke-linecap="round"/></svg><span data-i="n_1">Tu clínica recibe pocos mensajes y pocas llamadas.</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 20 20" style="flex:none;margin-top:2px"><circle cx="10" cy="10" r="9" fill="#D8DEE3"/><path d="M7 7l6 6M13 7l-6 6" stroke="#6B7780" stroke-width="1.9" stroke-linecap="round"/></svg><span data-i="n_2">Prefieres configurarlo todo tú mismo.</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 20 20" style="flex:none;margin-top:2px"><circle cx="10" cy="10" r="9" fill="#D8DEE3"/><path d="M7 7l6 6M13 7l-6 6" stroke="#6B7780" stroke-width="1.9" stroke-linecap="round"/></svg><span data-i="n_3">Buscas lo más barato aunque no esté gestionado.</span></li>
+          <li><svg width="19" height="19" viewBox="0 0 20 20" style="flex:none;margin-top:2px"><circle cx="10" cy="10" r="9" fill="#D8DEE3"/><path d="M7 7l6 6M13 7l-6 6" stroke="#6B7780" stroke-width="1.9" stroke-linecap="round"/></svg><span data-i="n_4">No quieres medir qué pasa con los contactos que entran.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="sec sec--navy">
+  <div class="wrap">
+    <p class="eyebrow rv" data-i="eb_proc">El proceso</p>
+    <h2 class="h2 rv rv-d1" style="color:#fff"><span data-i="h2_proc">Tres pasos.</span><br><em data-i="h2_proc_em">Tú no tocas nada.</em></h2>
+    <p class="lead rv rv-d2" data-i="lead_proc">Cada paso depende del anterior. Por eso empieza siempre por el primero.</p>
+
+    <div class="steps rv rv-d2">
+      <div class="step step--1">
+        <div class="step__n">01</div>
+        <div>
+          <h3 data-i="st1h">Demo de 15 minutos</h3>
+          <p data-i="st1p">Miramos juntos cómo llegan hoy tus mensajes y tus llamadas, y qué se está escapando. Sin compromiso.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">02</div>
+        <div>
+          <h3 data-i="st2h">Lo montamos por ti</h3>
+          <p data-i="st2p">Horarios, servicios, tono de tu clínica, canales, agenda y reglas de urgencia. Lo probamos contigo antes de activarlo.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">03</div>
+        <div>
+          <h3 data-i="st3h">Empieza a contestar</h3>
+          <p data-i="st3p">Tu clínica recibe solicitudes y turnos. Tú recibes un reporte al mes por WhatsApp. Nada más.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEE ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="guar rv">
+      <div class="guar__c">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2.5l7.5 3v6c0 4.6-3.2 8.8-7.5 10-4.3-1.2-7.5-5.4-7.5-10v-6l7.5-3z" stroke-linejoin="round"/>
+          <path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 data-i="guar_h">15 días. Si no funciona, no pagas.</h3>
+        <p data-i="guar_p">Lo pruebas en tu clínica con tus clientes de verdad. Si no ves resultados concretos, te devolvemos el setup. Sin preguntas.</p>
+        <small data-i="guar_s">La garantía cubre hasta las primeras 50 llamadas gestionadas por el agente de voz o los primeros 30 días del chat.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow rv" data-i="eb_faq">Preguntas frecuentes</p>
+    <h2 class="h2 rv rv-d1" style="margin-bottom:40px"><span data-i="h2_faq">Lo que siempre</span><br><em data-i="h2_faq_em">nos preguntan.</em></h2>
+
+    <div class="faq rv rv-d2">
+      <details class="faq__i">
+        <summary class="faq__q" data-i="q1">¿Tengo que aprender a usar una plataforma?</summary>
+        <p class="faq__a" data-i="a1">No. Lo instalamos, lo configuramos y lo mantenemos nosotros. Tú recibes solicitudes, avisos y un reporte al mes.</p>
+      </details>
+      <details class="faq__i">
+        <summary class="faq__q" data-i="q2">¿Y si el sistema no sabe responder algo?</summary>
+        <p class="faq__a" data-i="a2">Deriva la consulta y avisa al equipo. No inventa respuestas clínicas. Esa regla no se toca nunca.</p>
+      </details>
+      <details class="faq__i">
+        <summary class="faq__q" data-i="q3">¿Mis clientes notarán que no soy yo?</summary>
+        <p class="faq__a" data-i="a3">El tono se configura con el de tu clínica y lo pruebas tú antes de activarlo. Si no suena a ti, se ajusta hasta que suene.</p>
+      </details>
+      <details class="faq__i">
+        <summary class="faq__q" data-i="q4">¿Funciona con WhatsApp e Instagram?</summary>
+        <p class="faq__a" data-i="a4">Sí. Responde en WhatsApp, Instagram, Telegram y web. Con el agente de voz, también por teléfono.</p>
+      </details>
+      <details class="faq__i">
+        <summary class="faq__q" data-i="q5">¿Puede agendar turnos?</summary>
+        <p class="faq__a" data-i="a5">Sí. Coordina horarios según tu calendario y tu proceso actual.</p>
+      </details>
+      <details class="faq__i">
+        <summary class="faq__q" data-i="q6">¿Qué pasa con las urgencias?</summary>
+        <p class="faq__a" data-i="a6">Identifica el caso urgente, pide los datos básicos y avisa al veterinario o al equipo que tú definas.</p>
+      </details>
+      <details class="faq__i">
+        <summary class="faq__q" data-i="q7">¿Cuánto cuesta?</summary>
+        <p class="faq__a" data-i="a7">Depende de los canales que necesites y del volumen de tu clínica. Lo vemos en la demo con tus números delante, y así te decimos qué te costaría y qué te ahorraría. No un precio genérico que no significa nada.</p>
+      </details>
+      <details class="faq__i">
+        <summary class="faq__q" data-i="q8">¿Cuánto tarda en estar funcionando?</summary>
+        <p class="faq__a" data-i="a8">Entre tres y cinco días desde que tenemos tus horarios, servicios y protocolos.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ END ============ -->
+<section class="end">
+  <div class="wrap end__c">
+    <h2 class="rv"><span data-i="end_h">La próxima llamada</span><br><em data-i="end_h_em">puede ser una urgencia.</em></h2>
+    <p class="rv rv-d1" data-i="end_p">15 minutos. Te enseñamos el sistema funcionando y decides tú. Si no encaja, te lo decimos nosotros primero.</p>
+    <div class="rv rv-d1" style="display:flex;justify-content:center;margin-bottom:26px">
+      <span class="slots slots--l"><i></i><span data-i="slots">Quedan 3 lugares este mes</span></span>
+    </div>
+    <div class="end__a rv rv-d2">
+      <a href="#" class="btn btn--wa" data-wa>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>
+        <span data-i="cta_wa">Escríbenos por WhatsApp</span>
+      </a>
+      <a href="#" class="btn btn--ghost-l" data-cal>
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18" stroke-linecap="round"/></svg>
+        <span data-i="cta_cal">Reservar hora yo mismo</span>
+      </a>
+    </div>
+    <p class="end__n" data-i="note2">Respondemos en menos de 1 hora.</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <span>© 2026 IntelliVet</span>
+    <nav><a href="#">Términos</a><a href="#">Privacidad</a><a href="#">Contacto</a></nav>
+  </div>
+</footer>
+
+<!-- sticky mobile bar -->
+<div class="sticky" id="sticky">
+  <span class="sticky__slots" data-i="slots_short">Quedan 3 lugares este mes</span>
+  <div class="sticky__row">
+    <a href="#" class="btn btn--wa" data-wa>
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>
+      <span data-i="cta_wa_short">WhatsApp</span>
+    </a>
+    <a href="#" class="btn btn--teal" data-cal>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18" stroke-linecap="round"/></svg>
+      <span data-i="cta_cal_short">Reservar hora</span>
+    </a>
+  </div>
+</div>
+
+<a href="#" class="wa-f" data-wa aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.1-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.5-.5c.1-.2.2-.3.3-.5 0-.2 0-.4 0-.5 0-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.2.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>
+</a>
+
+<script>
+/* ============================================================
+   CONFIG — cambia solo estas tres líneas
+   ============================================================ */
+var CONFIG = {
+  whatsapp: "TUNUMERO",                    // ej: "34600000000" (sin + ni espacios)
+  calendly: "https://calendly.com/brianjosue1900/reunion-de-estrategia-intellivet",
+  slots: 3                                 // lugares libres este mes
+};
+
+var WA_MSG = {
+  es: "Hola Brian, tengo una clínica veterinaria y me gustaría agendar la demo de 15 minutos para ver cómo funciona IntelliVet.",
+  en: "Hi Brian, I run a veterinary clinic and I'd like to book the 15-minute demo to see how IntelliVet works."
+};
+
+var I18N = {
+  en: {
+    nav_cta: "Talk to us",
+    pulse: "ANSWERING RIGHT NOW",
+    h1a: "It's 11:14 pm.",
+    h1b: "Your clinic just won a client.",
+    hero_lead: "You're asleep. IntelliVet answers WhatsApp, Instagram and the phone. It books the appointment, spots the emergency and only wakes you if it matters.",
+    cta_wa: "Message us on WhatsApp",
+    cta_cal: "Book a time myself",
+    cta_wa_short: "WhatsApp",
+    cta_cal_short: "Book a time",
+    slots: "3 spots left this month",
+    slots_short: "3 spots left this month",
+    note: "No commitment. We reply in under an hour.",
+    note2: "We reply in under an hour.",
+    b1: "Hi, my dog has been vomiting since this afternoon. Are you open?",
+    b2: "Hi 👋 The clinic is closed right now, but I can help. Has he vomited more than three times, or is there blood?",
+    b3: "Three or four times. No blood.",
+    b4: "Got it. I've booked you in for 9 am tomorrow and I'm alerting the team tonight. If he gets worse or you see blood, call 900 000 000.",
+    b5: "Perfect, thank you so much.",
+    conv_done: "Appointment booked. Team alerted. You did nothing.",
+    conv_t: "WhatsApp · Clinic",
+    s1n: "24/7", s1l: "Answers at night, weekends and while you're in surgery.",
+    s2n: "< 30 sec", s2l: "That's how fast it replies. The clinic next door takes hours.",
+    s3n: "5+", s3l: "Clinics already running it today.",
+    eb_problem: "The problem",
+    h2_problem: "You're not short of clients.", h2_problem_em: "You're short of answers.",
+    lead_problem: "Four moments that happen in your clinic every week. Probably today too.",
+    p1w: "During the consult", p1h: "The phone rings. Your hands are busy.", p1p: "Nobody answers. That client calls the clinic next door.",
+    p2w: "After surgery", p2h: "You leave theatre. 18 unanswered messages.", p2p: "Some of them stopped waiting.",
+    p3w: "Out of hours", p3h: "Emergencies don't check the clock.", p3p: "But your team does go home at 8pm.",
+    p4w: "At reception", p4h: "One person. Four channels. At once.", p4p: "Front desk, phone, WhatsApp and Instagram. It's impossible.",
+    punch: "Every missed call is a client", punch_em: "already calling someone else.",
+    eb_how: "How it works",
+    h2_how: "We won't tell you.", h2_how_em: "We'll show you.",
+    lead_how: "Two recordings of the system actually answering. No editing, no script.",
+    v1h: "It answers the phone", v1p: "Picks up, understands why they're calling, spots the emergency and alerts the team when it matters.",
+    v2h: "It replies and books", v2p: "WhatsApp, Instagram, Telegram and web. Collects the details and offers the slots you have free.",
+    eb_change: "The change",
+    h2_change: "Same team.", h2_change_em: "Different clinic.",
+    lead_change: "It doesn't change what you do. It changes what happens when nobody can answer.",
+    c_now: "Today", c_new: "With IntelliVet",
+    n1: "Messages pile up while you're with a patient.",
+    n2: "At night the phone rings in an empty room.",
+    n3: "The client who won't wait goes elsewhere.",
+    n4: "The team interrupted every five minutes.",
+    n5: "Nobody knows how many contacts were lost.",
+    w1: "Replies in under 30 seconds, always.",
+    w2: "24/7 cover, including the early hours.",
+    w3: "Handled before they think about leaving.",
+    w4: "The team works. The system answers.",
+    w5: "Every contact logged, with a monthly report.",
+    eb_who: "Who is it for?",
+    h2_who: "This isn't", h2_who_em: "for everyone.",
+    lead_who: "We'd rather tell you now than waste 15 minutes of your time on a demo.",
+    fit_y: "It makes sense if…", fit_n: "It doesn't if…",
+    y1: "You get more than 20 messages a day and can't get to them all.",
+    y2: "You miss calls when you're in a consult or in surgery.",
+    y3: "You worry about losing emergencies out of hours.",
+    y4: "You've already tried reception and it still isn't enough.",
+    y5: "You want it set up and maintained, not another tool to configure.",
+    n_1: "Your clinic gets few messages and few calls.",
+    n_2: "You'd rather configure everything yourself.",
+    n_3: "You want the cheapest option, even unmanaged.",
+    n_4: "You don't want to measure what happens to the contacts coming in.",
+    eb_proc: "The process",
+    h2_proc: "Three steps.", h2_proc_em: "You touch nothing.",
+    lead_proc: "Each step depends on the one before. That's why it always starts with the first.",
+    st1h: "A 15-minute demo", st1p: "We look together at how your messages and calls arrive today, and what's slipping through. No commitment.",
+    st2h: "We set it up for you", st2p: "Hours, services, your clinic's tone, channels, calendar and emergency rules. You test it with us before it goes live.",
+    st3h: "It starts answering", st3p: "Your clinic receives requests and appointments. You get one report a month on WhatsApp. That's it.",
+    guar_h: "15 days. If it doesn't work, you don't pay.",
+    guar_p: "You try it in your clinic with your real clients. If you don't see concrete results, we refund the setup. No questions.",
+    guar_s: "The guarantee covers up to the first 50 calls handled by the voice agent or the first 30 days of the chat.",
+    eb_faq: "FAQ",
+    h2_faq: "What everyone", h2_faq_em: "asks us.",
+    q1: "Do I have to learn a platform?", a1: "No. We install it, configure it and maintain it. You get requests, alerts and one report a month.",
+    q2: "What if it doesn't know the answer?", a2: "It passes the query on and alerts the team. It never invents clinical answers. That rule doesn't move.",
+    q3: "Will my clients notice it isn't me?", a3: "The tone is built from your clinic's own and you test it before it goes live. If it doesn't sound like you, we adjust it until it does.",
+    q4: "Does it work with WhatsApp and Instagram?", a4: "Yes. It answers on WhatsApp, Instagram, Telegram and web. With the voice agent, on the phone too.",
+    q5: "Can it book appointments?", a5: "Yes. It coordinates times against your calendar and your current process.",
+    q6: "What about emergencies?", a6: "It identifies the urgent case, takes the basic details and alerts the vet or team you choose.",
+    q7: "How much does it cost?", a7: "It depends on the channels you need and your clinic's volume. We look at it in the demo with your numbers in front of us, so we can tell you what it would cost and what it would save. Not a generic price that means nothing.",
+    q8: "How long until it's running?", a8: "Three to five days from when we have your hours, services and protocols.",
+    end_h: "The next missed call", end_h_em: "could be an emergency.",
+    end_p: "15 minutes. We show you the system working and you decide. If it doesn't fit, we'll be the ones to say so."
+  }
+};
+
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lang = 'es';
+  var ES = {};
+
+  /* ---- snapshot spanish copy ---- */
+  document.querySelectorAll('[data-i]').forEach(function(n){
+    ES[n.dataset.i] = n.innerHTML;
+  });
+
+  /* ---- slot count everywhere ---- */
+  function applySlots(){
+    var n = CONFIG.slots;
+    ES.slots = 'Quedan ' + n + (n === 1 ? ' lugar' : ' lugares') + ' este mes';
+    ES.slots_short = ES.slots;
+    if(I18N.en){
+      I18N.en.slots = n + (n === 1 ? ' spot' : ' spots') + ' left this month';
+      I18N.en.slots_short = I18N.en.slots;
+    }
+  }
+  applySlots();
+
+  var mins = 23*60 + 14;
+  function clockTxt(){
+    var hh24 = Math.floor(mins/60), mm = String(mins%60).padStart(2,'0');
+    if(lang === 'en'){
+      var h12 = hh24 % 12 || 12;
+      return h12 + ':' + mm + ' ' + (hh24 < 12 ? 'am' : 'pm');
+    }
+    return String(hh24).padStart(2,'0') + ':' + mm;
+  }
+  function paintClock(){
+    var t = clockTxt();
+    var a = document.getElementById('clk'), b = document.getElementById('pulseClk');
+    if(a) a.textContent = t;
+    if(b) b.textContent = t;
+  }
+
+  function setLang(L){
+    lang = L;
+    var dict = (L === 'es') ? ES : I18N.en;
+    document.querySelectorAll('[data-i]').forEach(function(n){
+      var k = n.dataset.i;
+      if(dict[k] !== undefined) n.innerHTML = dict[k];
+    });
+    paintClock();
+    document.documentElement.lang = L;
+    document.querySelectorAll('.lang button').forEach(function(b){
+      b.classList.toggle('on', b.dataset.lang === L);
+    });
+    try{ localStorage.setItem('iv_lang', L); }catch(e){}
+  }
+
+  document.querySelectorAll('.lang button').forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.dataset.lang); });
+  });
+
+  setLang('es');
+  try{
+    var saved = localStorage.getItem('iv_lang');
+    if(saved === 'en') setLang('en');
+  }catch(e){}
+
+  /* ---- WhatsApp with prefilled message ---- */
+  function waHref(){
+    return 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(WA_MSG[lang] || WA_MSG.es);
+  }
+  document.querySelectorAll('[data-wa]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      window.open(waHref(), '_blank', 'noopener');
+    });
+  });
+
+  /* ---- Calendly popup ---- */
+  document.querySelectorAll('[data-cal]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      if(window.Calendly && Calendly.initPopupWidget){
+        Calendly.initPopupWidget({url: CONFIG.calendly});
+      } else {
+        window.open(CONFIG.calendly, '_blank', 'noopener');
+      }
+    });
+  });
+
+  /* ---- sticky CTA ---- */
+  var st = document.getElementById('sticky'), hero = document.querySelector('.hero');
+  if(st && hero && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(e){
+      st.classList.toggle('on', !e[0].isIntersecting);
+    }, {threshold:0}).observe(hero);
+  }
+
+  if(reduce || !('IntersectionObserver' in window)){
+    document.querySelectorAll('.rv').forEach(function(n){ n.classList.add('in'); });
+  } else {
+    /* ---- reveal on scroll ---- */
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.rv').forEach(function(n){ io.observe(n); });
+
+    /* failsafe: nothing may stay invisible if the observer misses it
+       (fast scroll, restored scroll position, back/forward cache) */
+    function sweepIn(){
+      document.querySelectorAll('.rv:not(.in)').forEach(function(n){
+        var r = n.getBoundingClientRect();
+        if(r.top < window.innerHeight && r.bottom > 0) n.classList.add('in');
+      });
+    }
+    window.addEventListener('load', sweepIn);
+    window.addEventListener('pageshow', sweepIn);
+    var sweepTick;
+    window.addEventListener('scroll', function(){
+      clearTimeout(sweepTick);
+      sweepTick = setTimeout(sweepIn, 200);
+    }, {passive:true});
+
+    /* ---- count up ---- */
+    function countUp(el){
+      var target = parseInt(el.dataset.count, 10);
+      var pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      var dur = 1100, t0 = null;
+      function tick(t){
+        if(!t0) t0 = t;
+        var p = Math.min((t - t0) / dur, 1);
+        el.textContent = pre + Math.round(target * (1 - Math.pow(1 - p, 3))) + suf;
+        if(p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    var nums = document.querySelectorAll('.strip__n[data-count]');
+    if(nums.length){
+      var nio = new IntersectionObserver(function(es){
+        es.forEach(function(en){
+          if(en.isIntersecting){ countUp(en.target); nio.unobserve(en.target); }
+        });
+      }, {threshold:.6});
+      nums.forEach(function(n){ nio.observe(n); });
+    }
+
+    /* ---- clock ticks ---- */
+    setInterval(function(){
+      mins = (mins + 1) % 1440;
+      paintClock();
+    }, 9000);
+  }
+})();
+</script>
+
+</body>
+</html>
