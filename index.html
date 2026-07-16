@@ -186,6 +186,28 @@ a{color:inherit;text-decoration:none}
 .vid__c h3{font-family:'Sora';font-size:20px;font-weight:600;margin-bottom:7px;color:#fff;letter-spacing:-.02em}
 .vid__c p{font-size:15.5px;color:var(--paper-2)}
 
+/* ============ TESTIMONIALS ============ */
+.tst{display:grid;gap:26px}
+@media(min-width:820px){.tst{grid-template-columns:1fr 1fr;gap:30px}}
+.tst__c{
+  background:var(--white);border:1px solid var(--line);border-radius:16px;
+  padding:22px;display:flex;flex-direction:column;gap:20px;
+  box-shadow:0 1px 2px rgba(20,22,26,.04);
+}
+.tst__f{
+  position:relative;width:100%;max-width:238px;margin:0 auto;aspect-ratio:9/16;
+  border-radius:12px;overflow:hidden;background:#0A141C;border:1px solid var(--line);
+}
+.tst__f iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tst__q{
+  font-size:16px;line-height:1.6;color:var(--ink-2);
+  border-left:3px solid var(--teal);padding-left:14px;
+}
+.tst__n{font-family:'Sora';font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
+.tst__r{font-size:14px;color:var(--ink-3);margin-top:3px}
+.tst__l{font-size:13px;color:var(--ink-3);margin-top:6px;display:flex;align-items:center;gap:6px}
+.tst__l svg{width:13px;height:13px;flex:none;stroke:var(--teal)}
+
 /* ============ COMPARE ============ */
 .cmp{display:grid;gap:14px}
 @media(min-width:760px){.cmp{grid-template-columns:1fr 1fr;gap:20px}}
@@ -597,6 +619,49 @@ a{color:inherit;text-decoration:none}
   </div>
 </section>
 
+<!-- ============ TESTIMONIALS ============ -->
+<section class="sec sec--tint" id="testimonios">
+  <div class="wrap">
+    <p class="eyebrow rv" data-i="eb_test">Testimonios</p>
+    <h2 class="h2 rv rv-d1"><span data-i="h2_test">No es teoría.</span><br><em data-i="h2_test_em">Son clientes reales.</em></h2>
+    <p class="lead rv rv-d2" data-i="lead_test">Dos personas que ya tienen nuestros sistemas de IA funcionando. Te lo cuentan ellos mismos.</p>
+
+    <div class="tst rv rv-d3">
+
+      <figure class="tst__c">
+        <div class="tst__f">
+          <iframe src="https://www.youtube.com/embed/C3H2IOBjlZQ" title="Testimonio de Paolo Burgos — Blessed Minds" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <blockquote class="tst__q" data-i="t1q">Montamos un chatbot que atiende a los pacientes fuera del horario de oficina, capta clientes y responde llamadas — sin tener que pagar otra recepcionista.</blockquote>
+        <figcaption>
+          <div class="tst__n">Paolo Burgos</div>
+          <div class="tst__r" data-i="t1r">Blessed Minds — Agencia de IA para médicos</div>
+          <div class="tst__l">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span data-i="t1l">Barcelona, España</span>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="tst__c">
+        <div class="tst__f">
+          <iframe src="https://www.youtube.com/embed/-5tBsqw3N4o" title="Testimonio de Richard Taty — Richard Taty LLC" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <blockquote class="tst__q" data-i="t2q">Montamos un sistema automatizado de IA que llama a clientes potenciales y recoge sus datos. Pasamos de 90 a 500 personas alcanzadas al día.</blockquote>
+        <figcaption>
+          <div class="tst__n">Richard Taty</div>
+          <div class="tst__r" data-i="t2r">Richard Taty LLC</div>
+          <div class="tst__l">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span data-i="t2l">Miami, EE. UU.</span>
+          </div>
+        </figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
 <!-- ============ GUARANTEE ============ -->
 <section class="sec">
   <div class="wrap">
@@ -711,7 +776,7 @@ a{color:inherit;text-decoration:none}
    ============================================================ */
 var CONFIG = {
   whatsapp: "50253638941",                 // +502 5363 8941 (sin + ni espacios)
-  calendly: "https://calendly.com/brianjosue1900/reunion-de-estrategia-intellivet",
+  calendly: "https://calendly.com/brianiboy/reunion-de-estrategia-intellivet",
   slots: 3                                 // lugares libres este mes
 };
 
@@ -791,6 +856,15 @@ var I18N = {
     st1h: "A 15-minute demo", st1p: "We look together at how your messages and calls arrive today, and what's slipping through. No commitment.",
     st2h: "We set it up for you", st2p: "Hours, services, your clinic's tone, channels, calendar and emergency rules. You test it with us before it goes live.",
     st3h: "It starts answering", st3p: "Your clinic receives requests and appointments. You get one report a month on WhatsApp. That's it.",
+    eb_test: "Testimonials",
+    h2_test: "It's not theory.", h2_test_em: "These are real clients.",
+    lead_test: "Two people already running our AI systems. They tell you themselves.",
+    t1q: "We built a chatbot that attends patients after office hours, catches leads and answers calls — without having to pay another human receptionist.",
+    t1r: "Blessed Minds — AI agency for doctors",
+    t1l: "Barcelona, Spain",
+    t2q: "We built an automated AI outbound system that calls potential customers and takes their info. It took us from 90 to 500 people reached per day.",
+    t2r: "Richard Taty LLC",
+    t2l: "Miami, USA",
     guar_h: "15 days. If it doesn't work, you don't pay.",
     guar_p: "You try it in your clinic with your real clients. If you don't see concrete results, we refund the setup. No questions.",
     guar_s: "The guarantee covers up to the first 50 calls handled by the voice agent or the first 30 days of the chat.",
